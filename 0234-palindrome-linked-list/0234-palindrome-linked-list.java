@@ -1,3 +1,4 @@
+import java.util.*;
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -10,25 +11,22 @@
  */
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> deque = new LinkedList<>();
 
-        //연결리스트에 스택을 삽입
+        //연결 리스트를 데크에 삽입
         ListNode node = head;
         while(node!=null)
         {
-            stack.add(node.val);
+            deque.add(node.val);
             node = node.next;
         }
 
-        //연결 리스트가 모두 빌 때까지 비교 
-        while(head!=null)
-        {
-            //연결 리스트와 스택에서 추출한 값을 비교해 팰린드롬 판별
-            if(head.val != stack.pop())
-            {
+        //데크가 모두 비거나(짝수 개일때) 1개 이하(홀수 개일때) 될 때까지 비교
+        while(!deque.isEmpty() && deque.size()>1) {
+            //데크의 양 끝을 추출해 팰린드롬 여부 확인
+            if(deque.pollFirst()!=deque.pollLast()) {
                 return false;
             }
-            head = head.next;
         }
         return true;
     }
